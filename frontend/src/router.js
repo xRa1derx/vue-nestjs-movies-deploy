@@ -3,12 +3,12 @@ import Home from './components/MainPage.vue'
 import ShowMovie from './components/ShowMovie.vue'
 const routes = [
     {
-        path: '/movies',
+        path: '/',
         name: 'Home',
         component: Home
     },
     {
-        path: '/movies/:id',
+        path: '/movie/:id',
         name: 'Movie',
         component: ShowMovie
     },

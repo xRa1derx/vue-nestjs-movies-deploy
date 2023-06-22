@@ -48,6 +48,8 @@ export class FilmsController {
   @HttpCode(HttpStatus.CREATED)
   @Header('Cache-Control', 'none')
   create(@UploadedFile() poster, @Body() createFilmDto: CreateFilmDto): Promise<Film> {
+    console.log(createFilmDto);
+    
     const res = { ...createFilmDto, poster: poster.filename };
     return this.filmsService.create(res)
   }

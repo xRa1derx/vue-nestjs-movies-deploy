@@ -23,7 +23,7 @@ import configuration from './config/configuration';
       dest: './uploads',
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'frontend/public'),
+      rootPath: join(__dirname, '..', 'public'),
     }),
   ],
 })
