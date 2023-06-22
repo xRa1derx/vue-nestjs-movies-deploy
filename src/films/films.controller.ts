@@ -48,7 +48,7 @@ export class FilmsController {
   @HttpCode(HttpStatus.CREATED)
   @Header('Cache-Control', 'none')
   create(@UploadedFile() poster, @Body() createFilmDto: CreateFilmDto): Promise<Film> {
-    console.log(createFilmDto);
+    console.log(poster);
     
     const res = { ...createFilmDto, poster: poster.filename };
     return this.filmsService.create(res)
@@ -70,8 +70,6 @@ export class FilmsController {
     fileFilter: imageFileFilter,
   }),)
   update(@UploadedFile() poster, @Body() updateFilmDto: UpdateFilmDto, @Param('id') id: string): Promise<Film> {
-    console.log(updateFilmDto);
-    
     let res = { ...updateFilmDto };
     if (poster) {
       res = { ...updateFilmDto, poster: poster.filename };

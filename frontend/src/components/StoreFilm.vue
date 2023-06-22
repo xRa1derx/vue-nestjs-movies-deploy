@@ -39,11 +39,7 @@ export default {
       formData.append('rating', rating.value);
       formData.append('year', year.value);
       axios
-        .post(`${server.baseURL}/movies`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        })
+        .post(`${server.baseURL}/movies`, formData)
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
     };
