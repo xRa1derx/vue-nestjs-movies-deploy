@@ -12,6 +12,7 @@
           <register-component
             v-if="actionType === 'register'"
           ></register-component>
+          <login-component v-if="actionType === 'login'"> </login-component>
         </template>
       </modal-component>
     </Teleport>
@@ -22,8 +23,9 @@
 import { ref } from 'vue';
 import ModalComponent from './ModalComponent.vue';
 import RegisterComponent from './RegisterComponent.vue';
+import LoginComponent from './LoginComponent.vue';
 export default {
-  components: { ModalComponent, RegisterComponent },
+  components: { ModalComponent, RegisterComponent, LoginComponent },
   setup() {
     const showModal = ref(false);
     const actionType = ref('');

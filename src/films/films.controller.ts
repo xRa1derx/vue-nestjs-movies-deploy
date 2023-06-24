@@ -10,8 +10,10 @@ import {
   HttpStatus,
   Param,
   Post,
-  Put,
-  Patch
+  Patch,
+  UseGuards,
+  Req,
+  Res
 } from '@nestjs/common';
 import { CreateFilmDto } from './dto/create-film.dto';
 import { UpdateFilmDto } from './dto/update-film.dto';
@@ -20,11 +22,13 @@ import { Film } from '../schemas/film.schema';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { editFileName, imageFileFilter } from '../utils/file-upload.utils';
+import { JWTGuard } from 'src/auth/guards/jwt.guard';
+import { AuthService } from 'src/auth/auth.service';
 
 @Controller('movies')
 export class FilmsController {
 
-  constructor(private readonly filmsService: FilmsService) {
+  constructor(private readonly filmsService: FilmsService, private readonly authService: AuthService) {
   }
 
   @Get()
@@ -32,11 +36,14 @@ export class FilmsController {
     return this.filmsService.getAll()
   }
 
+  // @UseGuards(JWTGuard)
   @Get(':id')
   getOne(@Param('id') id: string): Promise<Film> {
     return this.filmsService.getById(id)
   }
 
+
+  // @UseGuards(JWTGuard)
   @Post()
   @UseInterceptors(FileInterceptor('poster', {
     storage: diskStorage({
@@ -47,11 +54,9 @@ export class FilmsController {
   }),)
   @HttpCode(HttpStatus.CREATED)
   @Header('Cache-Control', 'none')
-  create(@UploadedFile() poster, @Body() createFilmDto: CreateFilmDto): Promise<Film> {
-    console.log(poster);
-    
-    const res = { ...createFilmDto, poster: poster.filename };
-    return this.filmsService.create(res)
+  async create(@UploadedFile() poster, @Body() createFilmDto: CreateFilmDto,): Promise<Film> {
+    const result = { ...createFilmDto, poster: poster.filename };
+    return this.filmsService.create(result)
   }
 
   @Delete(':id')

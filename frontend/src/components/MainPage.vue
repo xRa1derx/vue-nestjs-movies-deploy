@@ -34,6 +34,7 @@ export default {
     const movies = ref([]);
     const getMovies = () => {
       axios.get(`${server.baseURL}/movies`).then((res) => {
+        console.log(res);
         movies.value = res.data;
       });
     };
